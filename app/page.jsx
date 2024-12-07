@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useState } from "react";
 import Link from 'next/link'
 import Deal from './Deal';
-import styles from  '@app/logo.module.css'
+import styles from '@app/logo.module.css'
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,7 @@ function NavBar() {
   return (
     <header className="lg:px-16 px-4 bg-white flex flex-wrap items-center py-4 shadow-md">
       <div className="flex-1 flex justify-between items-center">
-      <a href="#" className={`${styles.logo} text-3xl`}>بني سويف بعيون مختلفة</a>
+        <a href="#" className={`${styles.logo} text-3xl`}>بني سويف بعيون مختلفة</a>
       </div>
 
       {/* Hamburger Menu Button */}
@@ -108,7 +108,7 @@ function Hero() {
               </svg>
             </a>
             <a
-              href="#"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeSt-t7swM6oqJCCCV8JUECnF3QjDgJHDCApGufbwFDd-paVw/viewform?usp=send_form"
               className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-gray-900 border border-gray-300 rounded-lg hover:bg-[#F78744] hover:text-white hover:border-[#F78744] transition duration-75"
             >
               تطوع معنا
@@ -285,7 +285,32 @@ function Contact() {
   )
 }
 
-function PhotoGallery() {
+const PhotoGallery = () => {
+  const images = [
+    '/Gallery/G1.jpeg',
+    '/Gallery/G2.jpeg',
+    '/Gallery/G3.jpeg',
+    '/Gallery/G4.jpeg',
+    '/Gallery/G5.jpeg',
+    '/Gallery/G6.jpeg',
+    '/Gallery/G7.jpeg',
+    '/Gallery/G8.jpeg',
+    '/Gallery/G9.jpeg',
+    '/Gallery/G10.jpeg',
+    '/Gallery/G11.jpeg',
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
     <>
       <div className="max-w-screen-md mb-8 lg:mb-16 mx-auto">
@@ -293,120 +318,52 @@ function PhotoGallery() {
           معرض الصور
         </h2>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-[85%] mx-auto">
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
+      <div className="relative w-full max-w-4xl mx-auto overflow-hidden h-[600px]">
+        <div
+          className="flex transition-transform duration-500 h-full"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((src, index) => (
+            <img
+              key={index}
+              src={src}
+              alt={`Slide ${index}`}
+              className="w-full h-full object-top flex-shrink-0"
+            />
+          ))}
         </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
-        <div>
-          <Image
-            src="/HeroPage.jpg" // Path to the image in the public folder
-            alt="Example image"
-            width={500} // Image width
-            height={300} // Image height
-          />
-        </div>
+        <button
+          onClick={handlePrev}
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 z-10"
+        >
+          &#8592;
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 z-10"
+        >
+          &#8594;
+        </button>
       </div>
     </>
   );
-}
-
+};
 
 function Footer() {
   return (
     <>
       <footer className="bg-[#F28A40] rounded-lg shadow m-4 dark:bg-gray-800">
         <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-center text-center">
-          <span className="text-sm text-white sm:text-center dark:text-gray-400">© 2024 <a href="#" className="hover:underline">مبادرة بني سويف بعيون مختلفة™</a>. كل الحقوق محفوظة.
-          </span>
+          <div className="text-sm text-white sm:text-center dark:text-gray-400">
+            © 2024 <a href="#" className="hover:underline">مبادرة بني سويف بعيون مختلفة™</a>. كل الحقوق محفوظة.
+          </div>
+          <div className="text-sm text-white sm:text-center dark:text-gray-400 mt-2">
+            Done By © 2024 <a href="https://github.com/EngSeif" className="hover:underline">engseif</a>.
+          </div>
         </div>
       </footer>
     </>
-  )
+  );
 }
 
 export default function Home() {
